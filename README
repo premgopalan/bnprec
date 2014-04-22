@@ -22,30 +22,37 @@ GAPREC: Gamma Poisson factorization based recommendation tool
 
 **gaprec** [OPTIONS]
 
-    -dir <string>    path to dataset directory with 3 files: train.tsv, test.tsv, validation.tsv (for examples, see example/movielens-1m)
+   -bnp		  run inference for the infinite model
+
+   -dir <string>    path to dataset directory with 3 files:
+   		    train.tsv, test.tsv, validation.tsv
+		    (for examples, see example/movielens-1m)
  
-    -m <int>	     number of items
-    -n <int>	     number of users
-    -k <int>	     number of factors
+   -m <int>	  number of items
+   -n <int>	  number of users
+   -k <int>	  number of factors
    
-    -rfreq <int>     assess convergence and compute other stats; <int> number of iterations; default: 10
+   -rfreq <int>	  assess convergence and compute other stats 
+   		  <int> number of iterations
+		  default: 10
 
-    -a
-    -b		     set hyperparameters
-    -c		     default: a = b = c = d = 0.3
-    -d
+   -a
+   -b		  set hyperparameters
+   -c		  default: a = b = c = d = 0.3
+   -d
 
-    -bias	     use user and item bias terms
+   -bias	  use user and item bias terms
+   -binary-data	  treat observed data as binary
+   		  (if rating > 0 then rating is treated as 1)
 
-    -binary-data     treat observed data as binary; if rating > 0 then rating is treated as 1
-
-    -gen-ranking     generate ranking file to use in precision computation; see example		  
+   -gen-ranking	  generate ranking file to use in precision 
+   		  computation; see example		  
 
 
 Example
 --------
 
-../src/gaprec -dir ../example/movielens -n 6040 -m 3900  -k 100 -rfreq 10
+(1) ../src/gaprec -dir ../example/movielens -n 6040 -m 3900  -k 100 -rfreq 10
 
 This will write output in n6040-m3900-k100-batch:
 
@@ -60,7 +67,7 @@ This will write output in n6040-m3900-k100-batch:
 To generate the ranking file (ranking.tsv) for precision computation,
 run the following:
 
-cd n6040-m3900-k100-batch;
+(2) cd n6040-m3900-k100-batch;
 ../../src/gaprec -dir ../../example/movielens -n 6040 -m 3900  -k 100 -rfreq 10 -gen-ranking
 
 This will rank all y == 0 in training and the test.tsv pairs in
@@ -68,6 +75,13 @@ decreasing order of their scores, along with true ratings from
 test.tsv.
 
 The output is now in n6040-m3900-k100-batch/ranking.tsv.
+
+Instead of (1) you could also run one of these:
+
+../src/gaprec -dir ../example/movielens -n 6040 -m 3900  -k 100 -rfreq 10 -bias
+../src/gaprec -dir ../example/movielens -n 6040 -m 3900  -k 100 -rfreq 10 -binary-data
+../src/gaprec -dir ../example/movielens -n 6040 -m 3900  -k 100 -rfreq 10 -binary-data -bias
+
 
 Bias terms
 ----------
@@ -80,3 +94,4 @@ are as follows:
 \beta_i' =  [\beta_i, h_i, 1]   
 
 
+x
