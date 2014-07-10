@@ -34,10 +34,10 @@ GAPREC: Gamma Poisson factorization based recommendation tool
    		  <int> number of iterations
 		  default: 10
 
-   -a
-   -b		  set hyperparameters
-   -c		  default: a = b = c = d = 0.3
-   -d
+   -alpha         set Gamma shape hyperparameter alpha (see paper)
+   -C             set Gamma scale hyperparameter c     (see paper)
+
+   -label         add a tag to the output directory
 
    -gen-ranking	  generate ranking file to use in precision 
    		  computation; see example		  
@@ -46,46 +46,21 @@ GAPREC: Gamma Poisson factorization based recommendation tool
 Example
 --------
 
-(1) ../src/gaprec -dir ../example/movielens -n 6040 -m 3900  -k 100 -rfreq 10
+(1) ../src/gaprec -dir ../example/movielens -n 6040 -m 3900  -T 100 -rfreq 10 
 
-This will write output in n6040-m3900-k100-batch:
+This will write output in n6040-m3900-k100-batch-alpha1.1-scale1-vb
 
-* param.txt: shows hyperparameter and other settings
-* precision.txt: computed mean precision at 10 and 100 on the test.tsv
-* validation.txt: the log likelihood on the validation.tsv ratings
-* theta.txt, beta.txt: the approx. expected posterior Poisson parameters
-* a,b,c,d.txt: the approx. expected posterior Gamma parameters
-* Ei, Eu.txt: the approx. expected bias parameters, if any (default none)
-* infer.log: monitor inference progress
+You can change the settings for the Gamma hyperparameters alpha and c (see paper) using the -alpha and the -C options.
 
-To generate the ranking file (ranking.tsv) for precision computation,
-run the following:
+To generate the ranking file (ranking.tsv) for precision computation, run the following:
 
-(2) cd n6040-m3900-k100-batch;
-../../src/gaprec -dir ../../example/movielens -n 6040 -m 3900  -k 100 -rfreq 10 -gen-ranking
+(2) cd n6040-m3900-k100-batch-alpha1.1-scale1-vb
+
+../../src/gaprec -dir ../../example/movielens -n 6040 -m 3900  -T 100 -rfreq 10 -gen-ranking
 
 This will rank all y == 0 in training and the test.tsv pairs in
-decreasing order of their scores, along with true ratings from
+decreasing order of their scores, along with the non-zero ratings from
 test.tsv.
 
-The output is now in n6040-m3900-k100-batch/ranking.tsv.
+The output is now in a new directory within the fit. Look for ranking.tsv.
 
-Instead of (1) you could also run one of these:
-
-../src/gaprec -dir ../example/movielens -n 6040 -m 3900  -k 100 -rfreq 10 -bias
-../src/gaprec -dir ../example/movielens -n 6040 -m 3900  -k 100 -rfreq 10 -binary-data
-../src/gaprec -dir ../example/movielens -n 6040 -m 3900  -k 100 -rfreq 10 -binary-data -bias
-
-
-Bias terms
-----------
-
-To model user activity and item popularity, bias parameters are
-additionally inferred for each user and item. The new \theta and \beta
-are as follows:
-    		  
-\theta_u' = [\theta_u, 1, g_u]
-\beta_i' =  [\beta_i, h_i, 1]   
-
-
-x

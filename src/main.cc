@@ -167,7 +167,7 @@ main(int argc, char **argv)
       gen_ranking_for_users = true;
     } else if (strcmp(argv[i], "-alpha") == 0) {
       alpha = atof(argv[++i]);
-    } else if (strcmp(argv[i], "-scale") == 0) {
+    } else if (strcmp(argv[i], "-C") == 0) {
       scale = atof(argv[++i]);
     } else if (strcmp(argv[i], "-natgrad-par") == 0) {
       vb = false;
