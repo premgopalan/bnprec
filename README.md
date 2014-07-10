@@ -1,3 +1,16 @@
+Reference
+----------
+
+Gopalan, P., Ruiz, F. J., Ranganath, R., & Blei, D. M. (2014). Bayesian Nonparametric Poisson Factorization for Recommendation Systems. In Proceedings of the Seventeenth International Conference on Artificial Intelligence and Statistics (pp. 275-283).
+
+@inproceedings{gopalan2014bayesian,
+title={Bayesian Nonparametric Poisson Factorization for Recommendation Systems},
+author={Gopalan, Prem and Ruiz, Francisco JR and Ranganath, Rajesh and Blei, David M},
+booktitle={Proceedings of the Seventeenth International Conference on Artificial Intelligence and Statistics},		    
+pages={275--283},			 
+year={2014}
+}
+
 Installation
 ------------
 
