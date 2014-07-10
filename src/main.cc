@@ -44,7 +44,7 @@ main(int argc, char **argv)
 
   string fname;
   uint32_t n = 0, m = 0;
-  uint32_t k = 0;
+  uint32_t k = 200;
   string ground_truth_fname;
   uint32_t rfreq = 1;
   string label;
@@ -74,8 +74,7 @@ main(int argc, char **argv)
   bool bias = false;
   bool explore = false;
   bool gen_ranking_for_users = false;
-  bool bnp = false;
-  double alpha = 2;
+  double alpha = 1.1;
   double scale = 1;
   double kappa = 0.5;
 
@@ -95,7 +94,7 @@ main(int argc, char **argv)
     } else if (strcmp(argv[i], "-m") == 0) {
       m = atoi(argv[++i]);
       fprintf(stdout, "+ m = %d\n", m);
-    } else if (strcmp(argv[i], "-k") == 0) {
+    } else if (strcmp(argv[i], "-T") == 0) {
       k = atoi(argv[++i]);
       fprintf(stdout, "+ k = %d\n", k);
     } else if (strcmp(argv[i], "-nmi") == 0) {
@@ -166,8 +165,6 @@ main(int argc, char **argv)
       explore = true;
     } else if (strcmp(argv[i], "-gen-ranking") == 0) {
       gen_ranking_for_users = true;
-    } else if (strcmp(argv[i], "-bnp") == 0) {
-      bnp = true;
     } else if (strcmp(argv[i], "-alpha") == 0) {
       alpha = atof(argv[++i]);
     } else if (strcmp(argv[i], "-scale") == 0) {
@@ -210,12 +207,9 @@ main(int argc, char **argv)
     bnprec.gen_ranking_for_users();
     exit(0);
   }
-
-  if (bnp) {
-    BNPRec bnprec(env, ratings);
-    bnprec.batch_infer();
-    exit(0);
-  }
+  BNPRec bnprec(env, ratings);
+  bnprec.batch_infer();
+  exit(0);
 }
 
 
