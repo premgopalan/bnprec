@@ -23,7 +23,7 @@ On Linux/Unix run
 
 **
 ** Note: UNTESTED on Mac ** 
-** Linux is strongly recommended. On Mac, you may run into issues. If you badly need it to work on this platform, let me know. 
+** Linux is strongly recommended. On Mac, you may run into issues. If you absolutely need it to work on Mac, let me know. 
 **
 
 On Mac OS, the location of the required gsl, gslblas and pthread
